@@ -1,18 +1,19 @@
 const express = require('express');
 const app = express();
 const mysql = require('mysql');
+const bodyParser = require('body-parser')
+const cors = require('cors')
+require('dotenv/config');
 const connectionDB = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 })
-const bodyParser = require('body-parser')
-const cors = require('cors')
-require('dotenv/config');
 const port = process.env.PORT
 
 //Import Routes
-//const postsRoute = require('./API/routes/Anime')
+//const postsRoute = require('./routes/Masterclass')
 
 //Middlewares
 app.use(cors({
