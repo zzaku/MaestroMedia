@@ -2,9 +2,9 @@ const express = require('express');
 const app = express();
 const mysql = require('mysql');
 const connectionDB = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
 })
 const bodyParser = require('body-parser')
 const cors = require('cors')
