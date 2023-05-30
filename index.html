@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gestion des vidéos</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+</head>
+<body>
+  <div id="videos">
+    <h1>Gestion des vidéos</h1>
+    
+    <div class="filters">
+        <div class="filter-pair">
+          <label for="filter-instrument">Instrument :</label>
+          <select id="filter-instrument">
+            <option value="">Tous</option>
+            <option value="guitare">Guitare</option>
+            <option value="piano">Piano</option>
+            <!-- Ajouter plus d'options ici -->
+          </select>
+        </div>
+        
+        <div class="filter-pair">
+          <label for="filter-duration">Durée :</label>
+          <select id="filter-duration">
+            <option value="">Tous</option>
+            <option value="short">Courte</option>
+            <option value="medium">Moyenne</option>
+            <option value="long">Longue</option>
+          </select>
+        </div>
+      </div>
+      
+    
+    <button>Ajouter une vidéo</button>
+    
+    <ul>
+      <li>
+        <div class="video-thumbnail">
+          <img src="chemin_vers_la_miniature_de_la_video.jpg" alt="Miniature de la vidéo 1">
+        </div>
+        <h2>Vidéo 1</h2>
+        <p>Instrument : Guitare</p>
+        <p>Durée : Moyenne</p>
+        <button>Modifier</button> 
+        <button>Supprimer</button>
+      </li>
+      
+      <!-- Ajouter plus de vidéos ici -->
+    </ul>
+  </div>
+</body>
+</html>
+
+  
