@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const myDatabase = require('./config/database');
+const myDatabase = require('./api/services/database');
 
 const cors = require('cors')
 require('dotenv/config');
@@ -10,6 +10,12 @@ const port = process.env.PORT
 const postsRoute = require('./api/routes/catalogue')
 
 //Middlewares
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 app.use(cors({
   origin: "*"
 }));
