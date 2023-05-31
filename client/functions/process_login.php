@@ -2,11 +2,11 @@
 session_start();
 include 'db_connection.php';
 
-$username = $_POST['username'];
+$email = $_POST['email'];
 $password = $_POST['password'];
 
-$stmt = $pdo->prepare("SELECT password FROM users WHERE username = ?");
-$stmt->execute([$username]);
+$stmt = $pdo->prepare("SELECT password FROM utilisateur WHERE email = ?");
+$stmt->execute([$email]);
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($row && password_verify($password, $row['password'])) {
