@@ -11,14 +11,12 @@ $methode = filter_input(INPUT_SERVER, "REQUEST_METHOD");
 $message = "";
 $isShort = false;
 
-$submitUrl = filter_input(INPUT_POST, "submitUrl");
+if ($methode === "POST") {
 
-if ($methode == "POST") {
+    $workName = filter_input(INPUT_POST, "workName");
 
-    $submitUrl = filter_input(INPUT_POST, "submitUrl");
-
-    if(isset($submitUrl)){
-        [$message, $isShort] = addUrl();
+    if(isset($workName)){
+      $allMasterclass = callAPI('GET', 'http://localhost:4500/masterclass/research/work?name=' . $workName);
     }
 }
 ?>
@@ -40,7 +38,7 @@ if ($methode == "POST") {
           <h1>Gérez et organisez vos Masterclass</h1>
           <form onsubmit="console.log('submited');" role="search"  method="POST" action="">
             <label for="search">Search</label>
-            <input id="search" type="search" placeholder="Rechercher une oeuvre" autofocus required />
+            <input id="search" name="workName" type="search" placeholder="Rechercher une oeuvre" autofocus required />
             <button type="submit">Go</button>    
           </form>
           <div class="filter-container d-flex content-center item-center">
