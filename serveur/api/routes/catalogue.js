@@ -14,7 +14,6 @@ router.get('/allmasterclass', async (req, res) => {
     }
 });
 
-
 //GET BACK ALL MASTERCLASS BY WORK'S NAME
 router.get('/research/work', async (req, res) => {
     const workName = req.query.name
