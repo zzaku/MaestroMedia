@@ -8,7 +8,7 @@
 function filter($teacher, $status, $language, $statusMasterclass, $langueMasterclass, $teacherMasterclass){
   require_once('./inc/functions/back/api.php');
   
-    $url = 'http://localhost:4500/masterclass/filter?';
+    $url = 'https://maestromedia.herokuapp.com/masterclass/filter?';
 
     if ($teacher === null) {
       $teacher = '';

@@ -10,8 +10,8 @@ $teacherMasterclass = "";
 
 $role = isset($_SESSION['user']['role']) ? htmlspecialchars($_SESSION['user']['role']) : '';
 
-$allMasterclass = callAPI('GET', 'http://localhost:4500/masterclass/allmasterclass');
-$allTeachers = callAPI('GET', 'http://localhost:4500/masterclass/allteachers');
+$allMasterclass = callAPI('GET', 'https://maestromedia.herokuapp.com/masterclass/allmasterclass');
+$allTeachers = callAPI('GET', 'https://maestromedia.herokuapp.com/masterclass/allteachers');
 
 $methode = filter_input(INPUT_SERVER, "REQUEST_METHOD");
 
@@ -38,7 +38,7 @@ if ($methode === "POST") {
     $instrument_nom = filter_input(INPUT_POST, "instrument_nom");
     
     if(isset($workName)){
-      $allMasterclass = callAPI('GET', 'http://localhost:4500/masterclass/research/work?name=' . $encodedWorkName);
+      $allMasterclass = callAPI('GET', 'https://maestromedia.herokuapp.com/masterclass/research/work?name=' . $encodedWorkName);
     } else if (isset($status) || isset($teacher) || isset($language)){
       [$allMasterclass, $statusMasterclass, $langueMasterclass, $teacherMasterclass] = filter($teacher, $status, $language, $statusMasterclass, $langueMasterclass, $teacherMasterclass);
     } else if (isset($instrument)){
