@@ -35,9 +35,39 @@ if ($methode === "POST") {
 ?>
 
   <div class="masterclass-container d-flex content-s-b">
-    <div class="dashboard-container">
-  
-    </div>
+
+  <div class="dashboard-container d-flex flex-column item-center" style="padding-top: 80px;">
+    <?php
+        $role = isset($_SESSION['user']['role']) ? htmlspecialchars($_SESSION['user']['role']) : '';
+
+        if ($role === 'Admin') {
+            echo '<i class="fas fa-crown fa-3x" style="color: gold;"></i>';
+        } else if ($role === 'musicologue') {
+            echo '<i class="fas fa-music fa-3x" style="color: #579279;"></i>';
+        } else if ($role === 'user') {
+            echo '<i class="fas fa-user fa-3x" style="color: #333;"></i>';
+        }
+    ?>
+    <h3 class="mt-2" style="font-size: 25px; color: white;">
+        <?php echo isset($_SESSION['user']['nom']) ? htmlspecialchars($_SESSION['user']['nom']) : ''; ?>
+    </h3>
+    <h3 style="font-size: 25px; color: white;">
+        <?php echo isset($_SESSION['user']['prenom']) ? htmlspecialchars($_SESSION['user']['prenom']) : ''; ?>
+    </h3>
+    <h4 style="font-size: 25px; color: white;">
+        <?php echo isset($_SESSION['user']['role']) ? htmlspecialchars($_SESSION['user']['role']) : ''; ?>
+    </h4>
+</div>
+
+
+
+
+
+
+
+
+
+
     <div class="list-masterclass-container">
       <div class="list-container d-flex flex-column content-s-a">
         <div class="list-header-container d-flex item-center">
@@ -114,37 +144,33 @@ if ($methode === "POST") {
             </div>
           </form>
         </div>
-        <div class="list-content">
-          <h2>Catalogue des masterclass</h2>
-          <?php echo count($allMasterclass) > 0 ? '<span>Nombre de résultat trouvé: ' . count($allMasterclass) . '</span>' : null ?>
-          <div class="list-card-container d-flex" style="justify-content: <?php echo count($allMasterclass) === 0 ? 'center' : 'start' ?>; align-item: <?php echo count($allMasterclass) === 0 ? 'center' : 'start' ?>; overflow-y: <?php echo count($allMasterclass) === 0 ? 'none' : 'scroll' ?>;">
-            <?php echo count($allMasterclass) === 0 ? '<h3>Aucun résultat trouvé</h3>' : null ?>
-            <?php
-            foreach ($allMasterclass as $masterclass): ?>
-            <div id="<?php echo $masterclass['masterclass_id'] ?>" class="card d-flex flex-column content-s-b">
-              <div class="overlay-container d-flex">
-                <img src="./inc/assets/css/images/card.png"/>
-                <div class="data-content d-flex flex-column content-s-b item-center">
-                  <div class="header-data d-flex content-s-b">
-                    <div class="d-flex flex-column">
-                      <h2><?php echo $masterclass['oeuvre_nom_compositeur'] ?></h2>
-                      <span><?php echo $masterclass['masterclass_status'] ?>(<?php echo $masterclass['masterclass_langue'] ?>)</span>
-                    </div>
-                    <h3><?php echo $masterclass['instrument_nom'] ?></h3>
-                  </div>
-                  <div class="footer-data d-flex">
-                    <h4><?php echo $masterclass['professeur_nom'] ?></h4>
-                  </div>
-                </div>
-              </div>
-              <div class="title-work d-flex item-center content-s-a">
-                <h2><?php echo strlen($masterclass['oeuvre_nom']) > 19 ? substr($masterclass['oeuvre_nom'], 0, 19) . '...' : $masterclass['oeuvre_nom'] ?></h2>
-                <i class="fa fa-play" style="color: #CC34AE;"></i>
-              </div>
-            </div>
-            <?php endforeach; ?>
-          </div>
-        </div>
+        <form action="" method="post" class="styled-form">
+    <div class="styled-field">
+        <input type="text" id="masterclass_nom" name="masterclass_nom" placeholder="Nom de la masterclass" required>
+    </div>
+    <div class="styled-field">
+        <input type="text" id="masterclass_langue" name="masterclass_langue" placeholder="Langue de la masterclass" required>
+    </div>
+    <div class="styled-field">
+        <input type="text" id="masterclass_status" name="masterclass_status" placeholder="Statut de la masterclass" required>
+    </div>
+    <div class="styled-field">
+        <input type="text" id="oeuvre_nom_compositeur" name="oeuvre_nom_compositeur" placeholder="Nom du compositeur de l'oeuvre" required>
+    </div>
+    <div class="styled-field">
+        <input type="text" id="oeuvre_nom" name="oeuvre_nom" placeholder="Nom de l'oeuvre" required>
+    </div>
+    <div class="styled-field">
+        <input type="text" id="professeur_nom" name="professeur_nom" placeholder="Nom du professeur" required>
+    </div>
+    <div class="styled-field">
+        <input type="text" id="utilisateur_nom" name="utilisateur_nom" placeholder="Nom de l'utilisateur" required>
+    </div>
+    <div class="styled-field">
+        <input type="text" id="instrument_nom" name="instrument_nom" placeholder="Nom de l'instrument" required>
+    </div>
+    <input type="submit" value="Envoyer">
+</form>
       </div>
     </div>
     <div class="instrument-container">
