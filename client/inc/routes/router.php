@@ -1,6 +1,6 @@
 <?php
 
-$page = filter_input(INPUT_GET, "page") ? filter_input(INPUT_GET, "page") : "home";
+$page = filter_input(INPUT_GET, "page") ? filter_input(INPUT_GET, "page") : "login";
 
 if(file_exists('./' . 'pages/' . $page . '/' . $page . ".php"))
 {
