@@ -7,7 +7,7 @@
 
 function filter($teacher, $status, $language, $statusMasterclass, $langueMasterclass, $teacherMasterclass){
     
-    $url = 'https://maestromedia.herokuapp.com/masterclass/filter?';
+    $url = 'http://locahost:4500/masterclass/filter?';
 
     if ($teacher === null) {
       $teacher = '';

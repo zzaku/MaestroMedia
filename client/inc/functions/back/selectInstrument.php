@@ -8,7 +8,7 @@
 function searchByInstrument($instrument){
     
 
-    $url = 'https://maestromedia.herokuapp.com/masterclass/instrument?';
+    $url = 'http://locahost:4500/masterclass/instrument?';
 
     $url .= 'name=' . urlencode($instrument);
 
