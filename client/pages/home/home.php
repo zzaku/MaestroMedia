@@ -1,7 +1,7 @@
 <?php
-require_once('./inc/functions/back/api.php');
-require_once('./inc/functions/back/filter.php');
-require_once('./inc/functions/back/selectInstrument.php');
+require_once('../../inc/functions/back/api.php');
+require_once('../../inc/functions/back/filter.php');
+require_once('../../inc/functions/back/selectInstrument.php');
 
 $statusMasterclass = "";
 $langueMasterclass = "";
