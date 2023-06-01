@@ -12,6 +12,7 @@ session_start();
         <title>Saline</title>
         <link rel="stylesheet" href="index.css">
         <link rel="stylesheet" href="./pages/home/home.css">
+
         <script src="https://kit.fontawesome.com/72d345e137.js" crossorigin="anonymous"></script>
     </head>
     <body>
