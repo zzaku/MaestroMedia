@@ -1,8 +1,8 @@
 <?php
-$db_host = 'cutmyl1nk.fr';
-$db_user = 'u380325924_rootmedia';
-$db_pass = '9l*WqA/f!F';
-$db_name = 'u380325924_maestromedia';
+$db_host = 'localhost';
+$db_user = 'root';
+$db_pass = 'nhSYC95Db553br';
+$db_name = 'maestromedia';
 
 try {
     $pdo = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
