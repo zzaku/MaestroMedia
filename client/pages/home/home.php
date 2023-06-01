@@ -8,6 +8,7 @@ $langueMasterclass = "";
 $teacherMasterclass = "";
 
 $allMasterclass = callAPI('GET', 'http://localhost:4500/masterclass/allmasterclass');
+var_dump($allMasterclass);
 $allTeachers = callAPI('GET', 'http://localhost:4500/masterclass/allteachers');
 
 $methode = filter_input(INPUT_SERVER, "REQUEST_METHOD");

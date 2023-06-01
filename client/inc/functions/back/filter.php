@@ -7,7 +7,7 @@
 
 function filter($teacher, $status, $language, $statusMasterclass, $langueMasterclass, $teacherMasterclass){
     
-    $url = 'http://localhost:4500/masterclass/filter?';
+    $url = 'http://locahost:4500/masterclass/filter?';
 
     if ($teacher === null) {
       $teacher = '';
