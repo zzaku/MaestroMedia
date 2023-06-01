@@ -7,8 +7,8 @@ $statusMasterclass = "";
 $langueMasterclass = "";
 $teacherMasterclass = "";
 
-$allMasterclass = callAPI('GET', 'http://localhost:4500/masterclass/allmasterclass');
-$allTeachers = callAPI('GET', 'http://localhost:4500/masterclass/allteachers');
+$allMasterclass = callAPI('GET', 'https://maestromedia.herokuapp.com/masterclass/allmasterclass');
+$allTeachers = callAPI('GET', 'https://maestromedia.herokuapp.com/masterclass/allteachers');
 
 $methode = filter_input(INPUT_SERVER, "REQUEST_METHOD");
 
@@ -24,7 +24,7 @@ if ($methode === "POST") {
     $instrument = filter_input(INPUT_POST, "instrument");
     
     if(isset($workName)){
-      $allMasterclass = callAPI('GET', 'http://localhost:4500/masterclass/research/work?name=' . $encodedWorkName);
+      $allMasterclass = callAPI('GET', 'https://maestromedia.herokuapp.com/masterclass/research/work?name=' . $encodedWorkName);
     } else if (isset($status) || isset($teacher) || isset($language)){
       [$allMasterclass, $statusMasterclass, $langueMasterclass, $teacherMasterclass] = filter($teacher, $status, $language, $statusMasterclass, $langueMasterclass, $teacherMasterclass);
     } else if (isset($instrument)){
@@ -113,7 +113,37 @@ if ($methode === "POST") {
             </div>
           </form>
         </div>
-        
+        <div class="list-content">
+          <h2>Catalogue des masterclass</h2>
+          <?php echo count($allMasterclass) > 0 ? '<span>Nombre de résultat trouvé: ' . count($allMasterclass) . '</span>' : null ?>
+          <div class="list-card-container d-flex" style="justify-content: <?php echo count($allMasterclass) === 0 ? 'center' : 'start' ?>; align-item: <?php echo count($allMasterclass) === 0 ? 'center' : 'start' ?>; overflow-y: <?php echo count($allMasterclass) === 0 ? 'none' : 'scroll' ?>;">
+            <?php echo count($allMasterclass) === 0 ? '<h3>Aucun résultat trouvé</h3>' : null ?>
+            <?php
+            foreach ($allMasterclass as $masterclass): ?>
+            <div id="<?php echo $masterclass['masterclass_id'] ?>" class="card d-flex flex-column content-s-b">
+              <div class="overlay-container d-flex">
+                <img src="./inc/assets/css/images/card.png"/>
+                <div class="data-content d-flex flex-column content-s-b item-center">
+                  <div class="header-data d-flex content-s-b">
+                    <div class="d-flex flex-column">
+                      <h2><?php echo $masterclass['oeuvre_nom_compositeur'] ?></h2>
+                      <span><?php echo $masterclass['masterclass_status'] ?>(<?php echo $masterclass['masterclass_langue'] ?>)</span>
+                    </div>
+                    <h3><?php echo $masterclass['instrument_nom'] ?></h3>
+                  </div>
+                  <div class="footer-data d-flex">
+                    <h4><?php echo $masterclass['professeur_nom'] ?></h4>
+                  </div>
+                </div>
+              </div>
+              <div class="title-work d-flex item-center content-s-a">
+                <h2><?php echo strlen($masterclass['oeuvre_nom']) > 19 ? substr($masterclass['oeuvre_nom'], 0, 19) . '...' : $masterclass['oeuvre_nom'] ?></h2>
+                <i class="fa fa-play" style="color: #CC34AE;"></i>
+              </div>
+            </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
       </div>
     </div>
     <div class="instrument-container">
