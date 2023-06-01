@@ -1,7 +1,7 @@
 <?php
 $db_host = 'localhost';
-$db_user = 'maestromedia';
-$db_pass = '!Maestromedia!2023';
+$db_user = 'root';
+$db_pass = 'nhSYC95Db553br';
 $db_name = 'maestromedia';
 
 try {

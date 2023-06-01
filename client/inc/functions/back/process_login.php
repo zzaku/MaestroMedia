@@ -15,7 +15,7 @@ function signIn() {
         header('Location: ./index.php?page=home');
         exit;
     } else {
-        header('Location: ../../pages/login/login.php?error=1');
+        header('Location: ./index.php?page=home&error=1');
 
         exit;
     }
