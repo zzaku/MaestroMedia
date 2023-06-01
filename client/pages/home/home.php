@@ -2,13 +2,15 @@
 require_once('./inc/functions/back/api.php');
 require_once('./inc/functions/back/filter.php');
 require_once('./inc/functions/back/selectInstrument.php');
+require_once('./inc/functions/back/editMasterclass.php');
 
 $statusMasterclass = "";
 $langueMasterclass = "";
 $teacherMasterclass = "";
 
+$role = isset($_SESSION['user']['role']) ? htmlspecialchars($_SESSION['user']['role']) : '';
+
 $allMasterclass = callAPI('GET', 'http://localhost:4500/masterclass/allmasterclass');
-var_dump($allMasterclass);
 $allTeachers = callAPI('GET', 'http://localhost:4500/masterclass/allteachers');
 
 $methode = filter_input(INPUT_SERVER, "REQUEST_METHOD");
@@ -23,6 +25,17 @@ if ($methode === "POST") {
     $language = filter_input(INPUT_POST, "language");
 
     $instrument = filter_input(INPUT_POST, "instrument");
+
+    $editMasterclass = filter_input(INPUT_POST, "sumbit-form-edit");
+    $masterclass_id = filter_input(INPUT_POST, "masterclass_id");
+    $masterclass_nom = filter_input(INPUT_POST, "masterclass_nom");
+    $masterclass_langue = filter_input(INPUT_POST, "masterclass_langue");
+    $masterclass_status = filter_input(INPUT_POST, "masterclass_status");
+    $oeuvre_nom_compositeur = filter_input(INPUT_POST, "oeuvre_nom_compositeur");
+    $oeuvre_nom = filter_input(INPUT_POST, "oeuvre_nom");
+    $professeur_nom = filter_input(INPUT_POST, "professeur_nom");
+    $utilisateur_nom = filter_input(INPUT_POST, "utilisateur_nom");
+    $instrument_nom = filter_input(INPUT_POST, "instrument_nom");
     
     if(isset($workName)){
       $allMasterclass = callAPI('GET', 'http://localhost:4500/masterclass/research/work?name=' . $encodedWorkName);
@@ -30,6 +43,8 @@ if ($methode === "POST") {
       [$allMasterclass, $statusMasterclass, $langueMasterclass, $teacherMasterclass] = filter($teacher, $status, $language, $statusMasterclass, $langueMasterclass, $teacherMasterclass);
     } else if (isset($instrument)){
       [$allMasterclass] = searchByInstrument($instrument);
+    } else if (isset($editMasterclass)){
+      [$allMasterclass] = editMasterclass($masterclass_id, $masterclass_nom, $masterclass_langue, $masterclass_status, $oeuvre_nom_compositeur, $oeuvre_nom, $professeur_nom, $utilisateur_nom, $instrument_nom);
     }
 }
 ?>
@@ -38,13 +53,11 @@ if ($methode === "POST") {
 
   <div class="dashboard-container d-flex flex-column item-center" style="padding-top: 80px;">
     <?php
-        $role = isset($_SESSION['user']['role']) ? htmlspecialchars($_SESSION['user']['role']) : '';
-
         if ($role === 'Admin') {
             echo '<i class="fas fa-crown fa-3x" style="color: gold;"></i>';
-        } else if ($role === 'musicologue') {
+        } else if ($role === 'Musicologue') {
             echo '<i class="fas fa-music fa-3x" style="color: #579279;"></i>';
-        } else if ($role === 'user') {
+        } else if ($role === 'Utilisateur') {
             echo '<i class="fas fa-user fa-3x" style="color: #333;"></i>';
         }
     ?>
@@ -58,16 +71,6 @@ if ($methode === "POST") {
         <?php echo isset($_SESSION['user']['role']) ? htmlspecialchars($_SESSION['user']['role']) : ''; ?>
     </h4>
 </div>
-
-
-
-
-
-
-
-
-
-
     <div class="list-masterclass-container">
       <div class="list-container d-flex flex-column content-s-a">
         <div class="list-header-container d-flex item-center">
@@ -78,7 +81,7 @@ if ($methode === "POST") {
             <button type="submit">Go</button>    
           </form>
           <div class="filter-icon-container d-flex content-center item-center">
-            <i class="fa fa-filter" style="color: #CC34AE; font-size: 45px;"></i>
+            <img src="./inc/assets/css/images/filter.png" />
           </div>
           <div class="filter-container d-flex flex-column item-center content-s-b">
             <form class="filter-form-container d-flex flex-column item-center content-s-b" role="filter" method="POST" action="">
@@ -108,7 +111,7 @@ if ($methode === "POST") {
                 <div class="section-title d-flex">
                   <h5>Professeur</h5>
                 </div>
-                <div>
+                <div class="select-container d-flex content-center">
                   <label class="select" for="slct">
                     <select id="slct" name="teacher">
                       <option value="<?php echo strlen($teacherMasterclass) > 0 ? $teacherMasterclass : null ?>" disabled="<?php echo strlen($teacherMasterclass) === 0 ? 'disabled' : null ?>" selected="selected"><?php echo strlen($teacherMasterclass) > 0 ? $teacherMasterclass : 'Séléctionner un professeur' ?></option>
@@ -144,33 +147,70 @@ if ($methode === "POST") {
             </div>
           </form>
         </div>
-        <form action="" method="post" class="styled-form">
-    <div class="styled-field">
-        <input type="text" id="masterclass_nom" name="masterclass_nom" placeholder="Nom de la masterclass" required>
-    </div>
-    <div class="styled-field">
-        <input type="text" id="masterclass_langue" name="masterclass_langue" placeholder="Langue de la masterclass" required>
-    </div>
-    <div class="styled-field">
-        <input type="text" id="masterclass_status" name="masterclass_status" placeholder="Statut de la masterclass" required>
-    </div>
-    <div class="styled-field">
-        <input type="text" id="oeuvre_nom_compositeur" name="oeuvre_nom_compositeur" placeholder="Nom du compositeur de l'oeuvre" required>
-    </div>
-    <div class="styled-field">
-        <input type="text" id="oeuvre_nom" name="oeuvre_nom" placeholder="Nom de l'oeuvre" required>
-    </div>
-    <div class="styled-field">
-        <input type="text" id="professeur_nom" name="professeur_nom" placeholder="Nom du professeur" required>
-    </div>
-    <div class="styled-field">
-        <input type="text" id="utilisateur_nom" name="utilisateur_nom" placeholder="Nom de l'utilisateur" required>
-    </div>
-    <div class="styled-field">
-        <input type="text" id="instrument_nom" name="instrument_nom" placeholder="Nom de l'instrument" required>
-    </div>
-    <input type="submit" value="Envoyer">
-</form>
+        <div class="list-content">
+          <h2>Catalogue des masterclass</h2>
+          <?php echo count($allMasterclass) > 0 ? '<span>Nombre de résultat trouvé: ' . count($allMasterclass) . '</span>' : null ?>
+          <div class="list-card-container d-flex" style="justify-content: <?php echo count($allMasterclass) === 0 ? 'center' : 'start' ?>; align-item: <?php echo count($allMasterclass) === 0 ? 'center' : 'start' ?>; overflow-y: <?php echo count($allMasterclass) === 0 ? 'none' : 'scroll' ?>;">
+            <?php echo count($allMasterclass) === 0 ? '<h3 style="color: #2f2f2f">Aucun résultat trouvé</h3>' : null ?>
+            <?php
+            foreach ($allMasterclass as $masterclass): ?>
+            <div id="<?php echo $masterclass['masterclass_id'] ?>" class="card d-flex flex-column content-s-b" data-masterclass_nom="<?php echo $masterclass['masterclass_nom'] ?>" data-utilisateur_nom="<?php echo $masterclass['utilisateur_nom'] ?>" data-oeuvre-compositeur="<?php echo $masterclass['oeuvre_nom_compositeur'] ?>" data-professeur_nom="<?php echo $masterclass['professeur_nom'] ?>" data-oeuvre_nom="<?php echo $masterclass['oeuvre_nom'] ?>" data-masterclass-status="<?php echo $masterclass['masterclass_status'] ?>" data-masterclass-langue="<?php echo $masterclass['masterclass_langue'] ?>" data-instrument-nom="<?php echo $masterclass['instrument_nom'] ?>" >
+              <div class="overlay-container d-flex">
+                <img src="./inc/assets/css/images/card.png"/>
+                <div class="data-content d-flex flex-column content-s-b item-center">
+                  <div class="header-data d-flex content-s-b">
+                    <div class="d-flex flex-column">
+                      <h2><?php echo $masterclass['oeuvre_nom_compositeur'] ?></h2>
+                      <span><?php echo $masterclass['masterclass_status'] ?>(<?php echo $masterclass['masterclass_langue'] ?>)</span>
+                    </div>
+                    <h3><?php echo $masterclass['instrument_nom'] ?></h3>
+                  </div>
+                  <div class="footer-data d-flex">
+                    <h4><?php echo $masterclass['professeur_nom'] ?></h4>
+                  </div>
+                </div>
+              </div>
+              <div class="title-work d-flex item-center content-s-a">
+                <h2><?php echo strlen($masterclass['oeuvre_nom']) > 19 ? substr($masterclass['oeuvre_nom'], 0, 19) . '...' : $masterclass['oeuvre_nom'] ?></h2>
+                <i class="fa fa-play" style="color: #CC34AE;"></i>
+              </div>
+            </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
+        <form action="" method="POST" class="styled-form">
+          <div id="idMasterclass">
+              <input type="text" id="masterclass_id" name="masterclass_id" value="" required>
+          </div>
+          <div class="styled-field">
+              <input type="text" id="masterclass_nom" name="masterclass_nom" <?php echo ($role === 'Admin') ? '' : 'readonly' ?> style="background: <?php echo ($role === 'Admin') ? '' : '#575c73' ?>; color: <?php echo ($role === 'Admin') ? '' : '#E1E1E1' ?>;" placeholder="Nom de la masterclass" value="" required>
+          </div>
+          <div class="styled-field">
+              <input type="text" id="masterclass_langue" name="masterclass_langue" <?php echo ($role === 'Admin') ? '' : 'readonly' ?> style="background: <?php echo ($role === 'Admin') ? '' : '#575c73' ?>; color: <?php echo ($role === 'Admin') ? '' : '#E1E1E1' ?>;" placeholder="Langue de la masterclass" value="" required>
+          </div>
+          <div class="styled-field">
+              <input type="text" id="masterclass_status" name="masterclass_status" <?php echo ($role === 'Admin') ? '' : 'readonly' ?> style="background: <?php echo ($role === 'Admin') ? '' : '#575c73' ?>; color: <?php echo ($role === 'Admin') ? '' : '#E1E1E1' ?>;" placeholder="Statut de la masterclass" value="" required>
+          </div>
+          <div class="styled-field">
+              <input type="text" id="oeuvre_nom_compositeur" name="oeuvre_nom_compositeur" <?php echo ($role === 'Admin' || $role ===  'Musicologue') ? '' : 'readonly' ?> style="background: <?php echo ($role === 'Admin' || $role === 'Musicologue') ? '' : '#575c73' ?>; color: <?php echo ($role === 'Admin' || $role === 'Musicologue') ? '' : '#E1E1E1' ?>;" placeholder="Nom du compositeur de l'oeuvre" value="" required>
+          </div>
+          <div class="styled-field">
+              <input type="text" id="oeuvre_nom" name="oeuvre_nom" <?php echo ($role === 'Admin' || $role === 'Musicologue') ? '' : 'readonly' ?> style="background: <?php echo ($role === 'Admin' || $role === 'Musicologue') ? '' : '#575c73' ?>; color: <?php echo ($role === 'Admin' || $role === 'Musicologue') ? '' : '#E1E1E1' ?>;" placeholder="Nom de l'oeuvre" value="" required>
+          </div>
+          <div class="styled-field">
+              <input type="text" id="professeur_nom" name="professeur_nom" <?php echo ($role === 'Admin' || $role === 'Musicologue') ? '' : 'readonly' ?> style="background: <?php echo ($role === 'Admin' || $role === 'Musicologue') ? '' : '#575c73' ?>; color: <?php echo ($role === 'Admin' || $role === 'Musicologue') ? '' : '#E1E1E1' ?>;" placeholder="Nom du professeur" value="" required>
+          </div>
+          <div class="styled-field">
+              <input type="text" id="utilisateur_nom" name="utilisateur_nom" <?php echo ($role === 'Admin') ? '' : 'readonly' ?> style="background: <?php echo ($role === 'Admin') ? '' : '#575c73' ?>; color: <?php echo ($role === 'Admin') ? '' : '#E1E1E1' ?>;" placeholder="Nom de l'utilisateur" value="" required>
+          </div>
+          <div class="styled-field">
+              <input type="text" id="instrument_nom" name="instrument_nom" <?php echo ($role === 'Admin' || $role === 'Musicologue') ? '' : 'readonly' ?> style="background: <?php echo ($role === 'Admin' || $role === 'Musicologue') ? '' : '#575c73' ?>; color: <?php echo ($role === 'Admin' || $role === 'Musicologue') ? '' : '#E1E1E1' ?>;" placeholder="Nom de l'instrument" value="" required>
+          </div>
+          <div class="edit-form-btn-container d-flex content-s-a item-center">
+            <input id="sumbit-form-edit" name="sumbit-form-edit" type="submit" <?php echo ($role === 'Admin' || $role === 'Musicologue') ? '' : 'disabled' ?> style="background: <?php echo ($role === 'Admin' || $role === 'Musicologue') ? '' : '#575c73' ?>; color: <?php echo ($role === 'Admin' || $role === 'Musicologue') ? '' : '#E1E1E1' ?>;" value="Modifier">
+            <input id="back" type="button" value="Retour">
+          </div>
+      </form>
       </div>
     </div>
     <div class="instrument-container">
@@ -195,4 +235,5 @@ if ($methode === "POST") {
     </div>
   </div>
   <script src="./inc/functions/front/filter.js"></script>
+  <script src="./inc/functions/front/editForm.js"></script>
   <script src="./inc/functions/front/SelectStatus.js"></script>

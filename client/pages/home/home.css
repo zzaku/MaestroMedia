@@ -70,6 +70,8 @@
     height: 500px;
     width: 100%;
     flex-wrap: wrap;
+    background: #E1E1E1;
+    border-radius: 10px;
 }
 
 .list-card-container::-webkit-scrollbar-track
@@ -117,10 +119,11 @@
       animation-fill-mode: both;
       -webkit-animation-timing-function: ease-out;
       animation-timing-function: ease-out;
+      box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .styled-form {
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -150,8 +153,12 @@
   font-family: 'Noto Sans', sans-serif;
 }
 
+.edit-form-btn-container{
+  width: 100%;
+}
+
 .styled-form input[type="submit"] {
-  width: 50%;
+  width: 70%;
   padding: 10px;
   font-size: 16px;
   color: white;
@@ -162,8 +169,27 @@
   cursor: pointer;
 }
 
+.styled-form input[type="text"] {
+  color: #2f2f2f;
+}
+
 .styled-form input[type="submit"]:hover {
-  background-color: #444;
+  border: 2px #E1E1E1 solid;
+}
+.styled-form input[type="button"] {
+  width: 20%;
+  padding: 10px;
+  font-size: 16px;
+  color: #2f2f2f;
+  background-color: #E1E1E1;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.styled-form input[type="button"]:hover {
+  border: 2px #cc34ae solid;
 }
 
 
@@ -247,17 +273,20 @@
 }
 
 .card{
-    position: relative;
-    margin-left: 2%;
-    margin-top: 2%;
-    height: 180px;
-    width:  200px;
-    border-radius: 10px;
-    cursor: pointer;
+  position: relative;
+  margin-left: 1%;
+  margin-top: 2%;
+  height: 46%;
+  width: 32%;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px #161c3d solid;
+  background: #e1E1E1;
 }
 
 .card:hover{
-    transform: scale(1.1);
+  transition-duration: 0.5s;
+    transform: scale(1.03);
 }
 
 .card h2{
@@ -289,14 +318,15 @@
 img{
     height: 100%;
     width: 100%;
-    border-radius: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .title-work{
-    height: 13%;
+    height: 15%;
     background: #151411;
-    border-radius: 5px;
-    padding-left: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .title-work h2{
@@ -391,6 +421,8 @@ label {
 .select {
     position: relative;
     min-width: 200px;
+    width: 70%;
+    height: 100%;
   }
   .select svg {
     position: absolute;
@@ -404,6 +436,10 @@ label {
     stroke-linecap: round;
     stroke-linejoin: round;
     pointer-events: none;
+  }
+  .select-container{
+    height: 100%;
+    width: 100%;
   }
   .select select {
     -webkit-appearance: none;

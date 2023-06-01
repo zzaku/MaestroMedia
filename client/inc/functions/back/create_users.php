@@ -7,9 +7,37 @@ $users = [
     [
         'nom' => 'Dupont',
         'prenom' => 'Jean',
-        'email' => 'jean.dupont@example.com',
-        'password' => 'password123', // plaintext password
-        'role' => 'admin',
+        'email' => 'Jean.makked@gmail.com',
+        'password' => 'password123',
+        'role' => 'Admin',
+    ],
+    [
+        'nom' => 'Smith',
+        'prenom' => 'Michael',
+        'email' => 'john.smith@example.com',
+        'password' => 'qwerty123',
+        'role' => 'Utilisateur',
+    ],
+    [
+        'nom' => 'Brown',
+        'prenom' => 'John',
+        'email' => 'jane.davis@example.com',
+        'password' => '987654321',
+        'role' => 'Musicologue'
+    ],
+    [
+        'nom' => 'Wilson',
+        'prenom' => 'Olivia',
+        'email' => 'noah.wilson@example.com',
+        'password' => 'password123',
+        'role' => 'Musicologue',
+    ],
+    [
+        'nom' => 'Anderson',
+        'prenom' => 'Sophia',
+        'email' => 'daniel.anderson@example.com',
+        'password' => 'pass1234',
+        'role' => 'Utilisateur',
     ],
     // add more users as needed
 ];

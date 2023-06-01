@@ -6,8 +6,9 @@
 }*/
 
 function filter($teacher, $status, $language, $statusMasterclass, $langueMasterclass, $teacherMasterclass){
-    
-    $url = 'http://locahost:4500/masterclass/filter?';
+  require_once('./inc/functions/back/api.php');
+  
+    $url = 'http://localhost:4500/masterclass/filter?';
 
     if ($teacher === null) {
       $teacher = '';
