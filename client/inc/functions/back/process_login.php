@@ -12,7 +12,7 @@ function signIn() {
     
     if ($row && password_verify($password, $row['password'])) {
         $_SESSION['loggedin'] = true;
-        header('Location: ./pages/home/home.php');
+        header('Location: ./index.php?page=home');
         exit;
     } else {
         header('Location: ../../pages/login/login.php?error=1');
