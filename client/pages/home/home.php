@@ -276,7 +276,7 @@ if ($methode === "POST") {
             <button type="submit" name="instrument" value="Flute"><h3>Flute</h3></button>
             <button type="submit" name="instrument" value="Violoncelle"><h3>Violoncelle</h3></button>
             <button type="submit" name="instrument" value="Clarinette"><h3>Clarinette</h3></button>
-            <button type="submit" name="instrument" value="Trombone"><h3></h3></button>
+            <button type="submit" name="instrument" value="Trombone"><h3>Trombone</h3></button>
           </form>
         </div>
       </div>
