@@ -197,7 +197,7 @@ if ($methode === "POST") {
         </div>
         <div class="list-content">
           <h2>Catalogue des masterclass</h2>
-          <?php echo count($allMasterclass) > 0 ? '<span>Nombre de résultat trouvé: ' . count($allMasterclass) . '</span>' : null ?>
+          <?php echo count($allMasterclass) > 0 ? '<span>Nombre de résultats trouvés: ' . count($allMasterclass) . '</span>' : null ?>
           <div class="list-card-container d-flex" style="justify-content: <?php echo count($allMasterclass) === 0 ? 'center' : 'start' ?>; align-item: <?php echo count($allMasterclass) === 0 ? 'center' : 'start' ?>; overflow-y: <?php echo count($allMasterclass) === 0 ? 'none' : 'scroll' ?>;">
             <?php echo count($allMasterclass) === 0 ? '<h3 style="color: #2f2f2f">Aucun résultat trouvé</h3>' : null ?>
             <?php
