@@ -6,10 +6,10 @@ if(isset($_POST['submit'])) {
 ?>
  <form action="" method="post" class="login-form">
   <label for="email" class="form-label">Adresse e-mail :</label>
-  <input type="email" id="email" name="email" class="form-input">
+  <input type="email" id="email" name="email" class="form-input" placeholder="Adresse mail">
 
   <label for="password" class="form-label">Mot de passe :</label>
-  <input type="password" id="password" name="password" class="form-input">
+  <input type="password" id="password" name="password" class="form-input" placeholder="Mot de passe">
 
   <input type="submit" name="submit" value="Connexion" class="form-button">
 </form>
