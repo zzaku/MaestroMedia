@@ -121,7 +121,7 @@ if ($methode === "POST") {
 </div>
     <div class="list-masterclass-container">
       <div class="list-container d-flex flex-column content-s-a">
-        <div class="list-header-container d-flex item-center">
+        <div class="list-header-container d-flex item-center content-center">
           <h1>Gérez et organisez vos Masterclass</h1>
           <form class="searche-form-container" role="search"  method="POST" action="">
             <label for="search">Search</label>
