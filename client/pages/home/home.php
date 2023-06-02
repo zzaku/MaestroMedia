@@ -270,13 +270,13 @@ if ($methode === "POST") {
           <form class="list-instruments-form-container d-flex flex-column content-s-a item-center" role="search"  method="POST" action="">
             <button type="submit" name="instrument" value="Piano"><h3>Piano</h3></button>
             <button type="submit" name="instrument" value="Violon"><h3>Violon</h3></button>
-            <button type="submit" name="instrument" value="Celle"><h3>Celle</h3></button>
-            <button type="submit" name="instrument" value="Voice"><h3>Voice</h3></button>
-            <button type="submit" name="instrument" value="Clarinet"><h3>Clarinet</h3></button>
+            <button type="submit" name="instrument" value="Chant"><h3>Chant</h3></button>
+            <button type="submit" name="instrument" value="Voix"><h3>Voix</h3></button>
+            <button type="submit" name="instrument" value="Alto"><h3>Alto</h3></button>
             <button type="submit" name="instrument" value="Flute"><h3>Flute</h3></button>
-            <button type="submit" name="instrument" value="Oboe"><h3>Oboe</h3></button>
-            <button type="submit" name="instrument" value="Chamber music"><h3>Chamber music</h3></button>
-            <button type="submit" name="instrument" value="Trambone"><h3>Trambone</h3></button>
+            <button type="submit" name="instrument" value="Violoncelle"><h3>Violoncelle</h3></button>
+            <button type="submit" name="instrument" value="Clarinette"><h3>Clarinette</h3></button>
+            <button type="submit" name="instrument" value="Trombone"><h3></h3></button>
           </form>
         </div>
       </div>
