@@ -1,22 +1,35 @@
 <?php
-require_once('./inc/functions/back/api.php');
-require_once('./inc/functions/back/filter.php');
-require_once('./inc/functions/back/selectInstrument.php');
-require_once('./inc/functions/back/editMasterclass.php');
+require_once "./inc/functions/back/api.php";
+require_once "./inc/functions/back/filter.php";
+require_once "./inc/functions/back/selectInstrument.php";
+require_once "./inc/functions/back/editMasterclass.php";
+require_once "./inc/functions/back/logout.php";
+
+if (!$_SESSION["loggedin"]) {
+    header("Location: ./index.php?page=login"); // Remplacez "login.php" par l'URL de votre page de connexion
+    exit();
+}
 
 $statusMasterclass = "";
 $langueMasterclass = "";
 $teacherMasterclass = "";
 
-$role = isset($_SESSION['user']['role']) ? htmlspecialchars($_SESSION['user']['role']) : '';
+$role = isset($_SESSION["user"]["role"])
+    ? htmlspecialchars($_SESSION["user"]["role"])
+    : "";
 
-$allMasterclass = callAPI('GET', 'https://maestromedia.herokuapp.com/masterclass/allmasterclass');
-$allTeachers = callAPI('GET', 'https://maestromedia.herokuapp.com/masterclass/allteachers');
+$allMasterclass = callAPI(
+    "GET",
+    "https://maestromedia.herokuapp.com/masterclass/allmasterclass"
+);
+$allTeachers = callAPI(
+    "GET",
+    "https://maestromedia.herokuapp.com/masterclass/allteachers"
+);
 
 $methode = filter_input(INPUT_SERVER, "REQUEST_METHOD");
 
 if ($methode === "POST") {
-
     $workName = filter_input(INPUT_POST, "workName");
     $encodedWorkName = urlencode($workName);
 
@@ -31,26 +44,58 @@ if ($methode === "POST") {
     $masterclass_nom = filter_input(INPUT_POST, "masterclass_nom");
     $masterclass_langue = filter_input(INPUT_POST, "masterclass_langue");
     $masterclass_status = filter_input(INPUT_POST, "masterclass_status");
-    $oeuvre_nom_compositeur = filter_input(INPUT_POST, "oeuvre_nom_compositeur");
+    $oeuvre_nom_compositeur = filter_input(
+        INPUT_POST,
+        "oeuvre_nom_compositeur"
+    );
     $oeuvre_nom = filter_input(INPUT_POST, "oeuvre_nom");
     $professeur_nom = filter_input(INPUT_POST, "professeur_nom");
     $utilisateur_nom = filter_input(INPUT_POST, "utilisateur_nom");
     $instrument_nom = filter_input(INPUT_POST, "instrument_nom");
-    
-    if(isset($workName)){
-      $allMasterclass = callAPI('GET', 'https://maestromedia.herokuapp.com/masterclass/research/work?name=' . $encodedWorkName);
-    } else if (isset($status) || isset($teacher) || isset($language)){
-      [$allMasterclass, $statusMasterclass, $langueMasterclass, $teacherMasterclass] = filter($teacher, $status, $language, $statusMasterclass, $langueMasterclass, $teacherMasterclass);
-    } else if (isset($instrument)){
-      [$allMasterclass] = searchByInstrument($instrument);
-    } else if (isset($editMasterclass)){
-      [$allMasterclass] = editMasterclass($masterclass_id, $masterclass_nom, $masterclass_langue, $masterclass_status, $oeuvre_nom_compositeur, $oeuvre_nom, $professeur_nom, $utilisateur_nom, $instrument_nom);
+
+    $logout = filter_input(INPUT_POST, "logout");
+
+    if (isset($workName)) {
+        $allMasterclass = callAPI(
+            "GET",
+            "https://maestromedia.herokuapp.com/masterclass/research/work?name=" .
+                $encodedWorkName
+        );
+    } elseif (isset($status) || isset($teacher) || isset($language)) {
+        [
+            $allMasterclass,
+            $statusMasterclass,
+            $langueMasterclass,
+            $teacherMasterclass,
+        ] = filter(
+            $teacher,
+            $status,
+            $language,
+            $statusMasterclass,
+            $langueMasterclass,
+            $teacherMasterclass
+        );
+    } elseif (isset($instrument)) {
+        [$allMasterclass] = searchByInstrument($instrument);
+    } elseif (isset($editMasterclass)) {
+        [$allMasterclass] = editMasterclass(
+            $masterclass_id,
+            $masterclass_nom,
+            $masterclass_langue,
+            $masterclass_status,
+            $oeuvre_nom_compositeur,
+            $oeuvre_nom,
+            $professeur_nom,
+            $utilisateur_nom,
+            $instrument_nom
+        );
+    } elseif (isset($logout)) {
+        signOut();
     }
 }
 ?>
 
   <div class="masterclass-container d-flex content-s-b">
-
   <div class="dashboard-container d-flex flex-column item-center" style="padding-top: 80px;">
     <?php
         if ($role === 'Admin') {
@@ -70,6 +115,9 @@ if ($methode === "POST") {
     <h4 style="font-size: 25px; color: white;">
         <?php echo isset($_SESSION['user']['role']) ? htmlspecialchars($_SESSION['user']['role']) : ''; ?>
     </h4>
+    <form class="logout-btn-container d-flex content-center item-center" role="logout"  method="POST" action="">
+      <input class="logout-btn" id="logout" name="logout" type="submit" value="Se déconnecter">
+    </form>
 </div>
     <div class="list-masterclass-container">
       <div class="list-container d-flex flex-column content-s-a">

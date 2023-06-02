@@ -7,7 +7,7 @@ $users = [
     [
         'nom' => 'Dupont',
         'prenom' => 'Jean',
-        'email' => 'Jean.makked@gmail.com',
+        'email' => 'Jean.dupont@gmail.com',
         'password' => 'password123',
         'role' => 'Admin',
     ],
